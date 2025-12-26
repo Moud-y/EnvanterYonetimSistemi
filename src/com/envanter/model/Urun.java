@@ -19,37 +19,30 @@ public class Urun implements Depolanabilir {
     public int getId() {
         return id;
     }
-
     public String getAd() {
         return ad;
     }
-
     public double getFiyat() {
         return fiyat;
     }
-
     public int getAdetkMiktari() {
         return adetMiktari;
     }
-
     public void fiyatAyarla(double fiyat) {
         if (fiyat >= 0) {
             this.fiyat = fiyat;
         }
     }
-
     public void stokArtir(int miktar) {
         if (miktar > 0) {
         	adetMiktari += miktar;
         }
     }
-
     public void stokAzalt(int miktar) {
         if (miktar > 0 && adetMiktari >= miktar) {
         	adetMiktari -= miktar;
         }
     }
-
     public boolean dusukStokMu() {
         return adetMiktari <= DUSUK_ADET_LIMITI;
     }
