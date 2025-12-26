@@ -37,4 +37,6 @@ public class AnaPencere extends JFrame {
             new AnaPencere().setVisible(true);
         });
     }
+    	// UI test
+
 }
