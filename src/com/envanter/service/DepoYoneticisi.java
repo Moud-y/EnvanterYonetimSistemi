@@ -1,5 +1,4 @@
 package com.envanter.service;
-
 import com.envanter.model.Envanter;
 import com.envanter.model.Urun;
 import java.util.List;

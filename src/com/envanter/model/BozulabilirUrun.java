@@ -1,17 +1,21 @@
 package com.envanter.model;
-
 import java.time.LocalDate;
 
-public class BozulabilirUrun extends Urun {
-
-	private LocalDate sonKullanmaTarihi;
-
-    public BozulabilirUrun(int id, String ad, double fiyat, int Adetmiktari, LocalDate sonKullanmaTarihi) {
-        super(id, ad, fiyat, Adetmiktari);
+public abstract class BozulabilirUrun extends AbstractUrun {
+	
+    public BozulabilirUrun(int id, String ad, double fiyat, LocalDate sonKullanmaTarihi) {
+        super(id, ad, fiyat);
         this.sonKullanmaTarihi = sonKullanmaTarihi;
     }
-
-    public LocalDate getExpiryDate() {
-        return sonKullanmaTarihi;
+    
+    public boolean sonKullanmaTarihiGectiMi() {
+        if (sonKullanmaTarihi == null) {
+            return false;
+        }
+        return LocalDate.now().isAfter(sonKullanmaTarihi);
+    }
+    
+    public boolean duskAdetmi() {
+        return adetMiktari <= 2;
     }
 }

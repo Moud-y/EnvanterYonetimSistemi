@@ -1,5 +1,4 @@
 package com.envanter;
-
 import com.envanter.ui.AnaPencere;
 
 public class Main {
