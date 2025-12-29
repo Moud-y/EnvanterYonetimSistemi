@@ -1,7 +1,8 @@
 package com.envanter.service;
-import com.envanter.model.Envanter;
-import com.envanter.model.Urun;
+//Service class , فئة الخدمة
 import java.util.List;
+import com.envanter.model.AbstractUrun;
+import com.envanter.model.Envanter;
 
 public class DepoYoneticisi {
 
@@ -11,15 +12,15 @@ public class DepoYoneticisi {
         this.envanter = envanter;
     }
 
-    public void urunEkle(Urun urun) {
+    public void urunEkle(AbstractUrun  urun) {
         envanter.getUrunler().add(urun);
     }
 
-    public void urunSil(Urun urun) {
+    public void urunSil(AbstractUrun  urun) {
         envanter.getUrunler().remove(urun);
     }
 
-    public List<Urun> tumUrunleriGetir() {
+    public List<AbstractUrun > tumUrunleriGetir() {
         return envanter.getUrunler();
     }
 }

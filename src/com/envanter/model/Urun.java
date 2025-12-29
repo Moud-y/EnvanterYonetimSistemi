@@ -5,10 +5,10 @@ public abstract class Urun extends AbstractUrun {
     private static final int DUSUK_ADET_LIMITI = 5;
 
     public Urun(int id, String ad, double fiyat) {
-    	/*  super يعني:
-			روح نفذ
-			constructor
-			الأب (AbstractUrun)» */
+    	/*super:
+    	  يعني روح نفذ
+		  constructor
+		  الاب */
         super(id, ad, fiyat);
     }
 
