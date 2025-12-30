@@ -50,6 +50,10 @@ public abstract class AbstractUrun {
     // يمكن لكل منتج عرض معلوماته الخاصة بطريقة مختلفة.
     public abstract String urunBilgisi();
     
+    public boolean dusukStokMu() {
+        return adetMiktari <= 5;
+    }
+
 }
 
 
