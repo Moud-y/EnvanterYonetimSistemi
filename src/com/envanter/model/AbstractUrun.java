@@ -14,13 +14,13 @@ public abstract class AbstractUrun {
     }
     
 
-    protected void AdetArtir(int miktar) {
+    public void AdetArtir(int miktar) {
         if (miktar > 0) {
             adetMiktari += miktar;
         }
     }
 
-    protected void AdetAzalt(int miktar) {
+    public void AdetAzalt(int miktar) {
         if (miktar > 0 && adetMiktari >= miktar) {
             adetMiktari -= miktar;
         }
@@ -50,7 +50,7 @@ public abstract class AbstractUrun {
     // يمكن لكل منتج عرض معلوماته الخاصة بطريقة مختلفة.
     public abstract String urunBilgisi();
     
-    public boolean dusukStokMu() {
+    public boolean dusukAdetMi() {
         return adetMiktari <= 5;
     }
 

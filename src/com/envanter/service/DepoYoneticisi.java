@@ -37,13 +37,12 @@ public class DepoYoneticisi {
         return null;
     }
 
-    public boolean dusukStokVarMi(AbstractUrun urun) {
-        return urun.dusukStokMu();
+    public boolean dusukAdetVarMi(AbstractUrun urun) {
+        return urun.dusukAdetMi();
     }
     
     public List<AbstractUrun> bozulabilirUrunleriGetir() {
         List<AbstractUrun> sonuc = new ArrayList<>();
-
         for (AbstractUrun urun : envanter.getUrunler()) {
             if (urun instanceof BozulabilirUrun) {
                 sonuc.add(urun);
@@ -51,5 +50,14 @@ public class DepoYoneticisi {
         }
         return sonuc;
     }
+    
+    public void stokGuncelle(AbstractUrun urun, int miktar) {
+        if (miktar > 0) {
+            urun.AdetArtir(miktar);
+        } else if (miktar < 0) {
+            urun.AdetAzalt(Math.abs(miktar));
+        }
+    }
+
 
 }
