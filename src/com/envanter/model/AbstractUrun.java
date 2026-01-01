@@ -2,7 +2,7 @@ package com.envanter.model;
 
 public abstract class AbstractUrun {
 
-    protected int id;
+     int id;
     protected String ad;
     protected double fiyat;
     protected int adetMiktari;

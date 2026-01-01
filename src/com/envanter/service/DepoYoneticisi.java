@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import com.envanter.model.BozulabilirUrun;
 
 public class DepoYoneticisi {
-
+	// منطق
     private Envanter envanter;
 
     public DepoYoneticisi(Envanter envanter) {
@@ -18,7 +18,7 @@ public class DepoYoneticisi {
         envanter.getUrunler().add(urun);
     }
     // ازالة منتج
-    public void urunSil(AbstractUrun  urun) {
+    public void urunSil(AbstractUrun  urun) {	
         envanter.getUrunler().remove(urun);
     }
 
@@ -50,7 +50,7 @@ public class DepoYoneticisi {
         }
         return sonuc;
     }
-    
+    //هذا الميثود مسؤول عن تحديث المخزون لأي منتج، سواء زيادة او تقصان
     public void stokGuncelle(AbstractUrun urun, int miktar) {
         if (miktar > 0) {
             urun.AdetArtir(miktar);
