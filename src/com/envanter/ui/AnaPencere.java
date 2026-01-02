@@ -8,6 +8,9 @@ import com.envanter.model.Envanter;
 import com.envanter.model.Urun;
 import com.envanter.service.DepoYoneticisi;
 import com.envanter.model.NormalUrun;
+import java.awt.Dimension;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 
 public class AnaPencere extends JFrame {
@@ -18,7 +21,10 @@ public class AnaPencere extends JFrame {
 
     public AnaPencere() {
         // إنشاء المنطق (Model + Service)
-        envanter = new Envanter();
+    	// إعدادات الواجهة
+        // إنشاء الأزرار
+        // ربط الأزرار
+    	envanter = new Envanter();
         depoYoneticisi = new DepoYoneticisi(envanter);
 
         setTitle("Envanter Yönetim Sistemi");
@@ -47,7 +53,11 @@ public class AnaPencere extends JFrame {
 
         // ربط زر الإضافة
         urunEkleBtn.addActionListener(e -> urunEkle());
+    	listeleBtn.addActionListener(e -> urunleriListele());
+
+
     }
+    	
 
     private void urunEkle() {
         JTextField adField = new JTextField();
@@ -79,6 +89,41 @@ public class AnaPencere extends JFrame {
             }
         }
     }
+    
+    private void urunleriListele() {
+        var urunler = depoYoneticisi.tumUrunleriGetir();
+
+        if (urunler.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Henüz ürün eklenmemiş.",
+                "Bilgi",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        for (var urun : urunler) {
+            sb.append(urun.urunBilgisi()).append("\n");
+            sb.append("-------------------\n");
+        }
+
+        JTextArea textArea = new JTextArea(sb.toString());
+        textArea.setEditable(false);
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setPreferredSize(new Dimension(400, 300));
+
+        JOptionPane.showMessageDialog(
+            this,
+            scrollPane,
+            "Ürün Listesi",
+            JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new AnaPencere().setVisible(true));
