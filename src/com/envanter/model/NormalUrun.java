@@ -7,8 +7,9 @@ public class NormalUrun extends AbstractUrun {
 	}
 
     public String urunBilgisi() {
-        return "Ürün: " + ad +
-               " | Fiyat: " + fiyat +
-               " | Stok: " + adetMiktari;
+        return "ID: " + id +
+               "        Ürün: " + ad +
+               "        Fiyat: " + fiyat +
+               "        Adet: " + adetMiktari;
     }
 }

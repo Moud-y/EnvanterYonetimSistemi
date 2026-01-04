@@ -9,7 +9,6 @@ import com.envanter.model.BozulabilirUrun;
 public class DepoYoneticisi {
 	// منطق
     private Envanter envanter;
-
     public DepoYoneticisi(Envanter envanter) {
         this.envanter = envanter;
     }
@@ -51,7 +50,7 @@ public class DepoYoneticisi {
         return sonuc;
     }
     //هذا الميثود مسؤول عن تحديث المخزون لأي منتج، سواء زيادة او تقصان
-    public void stokGuncelle(AbstractUrun urun, int miktar) {
+    public void AdetGuncelle(AbstractUrun urun, int miktar) {
         if (miktar > 0) {
             urun.AdetArtir(miktar);
         } else if (miktar < 0) {

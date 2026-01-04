@@ -2,17 +2,17 @@ package com.envanter.model;
 
 public abstract class AbstractUrun {
 
-     int id;
+	protected  int id;
     protected String ad;
     protected double fiyat;
     protected int adetMiktari;
 
     public AbstractUrun(int id, String ad, double fiyat) {
+        this.id = id++;   // ID تلقائي
         this.ad = ad;
         this.fiyat = fiyat;
         this.adetMiktari = 0;
     }
-    
 
     public void AdetArtir(int miktar) {
         if (miktar > 0) {

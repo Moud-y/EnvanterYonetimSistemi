@@ -51,21 +51,25 @@ public class AnaPencere extends JFrame {
 
         add(butonPanel, BorderLayout.CENTER);
 
-        // ربط زر الإضافة
+        // ربط زر الأزرار
         urunEkleBtn.addActionListener(e -> urunEkle());
     	listeleBtn.addActionListener(e -> urunleriListele());
+    	urunSilBtn.addActionListener(e -> urunSil());
 
 
     }
     	
-
+    private int id = 1;
+    
     private void urunEkle() {
         JTextField adField = new JTextField();
         JTextField fiyatField = new JTextField();
+        JTextField adetMiktariField = new JTextField();
 
         Object[] mesaj = {
                 "Ürün Adı:", adField,
-                "Fiyat:", fiyatField
+                "Fiyat:", fiyatField,
+                "adet:", adetMiktariField,
         };
 
         int sonuc = JOptionPane.showConfirmDialog(
@@ -79,11 +83,13 @@ public class AnaPencere extends JFrame {
             try {
                 String ad = adField.getText();
                 double fiyat = Double.parseDouble(fiyatField.getText());
+                int adet = Integer.parseInt(adetMiktariField.getText());
 
-                AbstractUrun urun = new NormalUrun(1, ad, fiyat);
+                AbstractUrun urun = new NormalUrun(id++, ad, fiyat);
+                urun.setAdetMiktari(adet);
                 depoYoneticisi.urunEkle(urun);
 
-                JOptionPane.showMessageDialog(this, "Ürün başarıyla eklendi");
+                JOptionPane.showMessageDialog(this, "Ürün eklendi");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Hatalı giriş!", "Hata", JOptionPane.ERROR_MESSAGE);
             }
@@ -122,6 +128,41 @@ public class AnaPencere extends JFrame {
             "Ürün Listesi",
             JOptionPane.INFORMATION_MESSAGE
         );
+    }
+    
+    private void urunSil() {
+        String input = JOptionPane.showInputDialog(
+            this,
+            "Silinecek ürün ID:",
+            "Ürün Sil",
+            JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (input == null) return;
+
+        try {
+            int id = Integer.parseInt(input);
+            AbstractUrun urun = depoYoneticisi.urunBulIdIle(id);
+            if (urun == null) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Ürün bulunamadı!",
+                    "Hata",
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            depoYoneticisi.urunSil(urun);
+            JOptionPane.showMessageDialog(this, "Ürün silindi.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Geçersiz ID!",
+                "Hata",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
 
