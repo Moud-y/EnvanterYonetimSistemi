@@ -2,13 +2,13 @@ package com.envanter.model;
 
 public abstract class AbstractUrun {
 
-	protected  int id;
+	protected  int id = 1;
     protected String ad;
     protected double fiyat;
     protected int adetMiktari;
 
     public AbstractUrun(int id, String ad, double fiyat) {
-        this.id = id++;   // ID تلقائي
+        this.id = id;   // ID تلقائي
         this.ad = ad;
         this.fiyat = fiyat;
         this.adetMiktari = 0;
@@ -19,13 +19,11 @@ public abstract class AbstractUrun {
             adetMiktari += miktar;
         }
     }
-
     public void AdetAzalt(int miktar) {
         if (miktar > 0 && adetMiktari >= miktar) {
             adetMiktari -= miktar;
         }
     }
-    
     public int getId() {
         return id;
     }
@@ -51,12 +49,7 @@ public abstract class AbstractUrun {
     public abstract String urunBilgisi();
     
     public boolean dusukAdetMi() {
-        return adetMiktari <= 5;
+        return adetMiktari < 3;
     }
 
 }
-
-
-
-
-

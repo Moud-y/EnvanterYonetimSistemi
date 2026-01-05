@@ -40,6 +40,16 @@ public class DepoYoneticisi {
         return urun.dusukAdetMi();
     }
     
+
+    public AbstractUrun urunBulAdGore(String ad) {
+        for (AbstractUrun urun : envanter.getUrunler()) {
+            if (urun.getAd().equalsIgnoreCase(ad)) {
+                return urun;
+            }
+        }
+        return null;
+    }
+
     public List<AbstractUrun> bozulabilirUrunleriGetir() {
         List<AbstractUrun> sonuc = new ArrayList<>();
         for (AbstractUrun urun : envanter.getUrunler()) {

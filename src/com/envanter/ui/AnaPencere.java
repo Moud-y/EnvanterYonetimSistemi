@@ -1,21 +1,18 @@
 package com.envanter.ui;
-
 import javax.swing.*;
 import java.awt.*;
 
 import com.envanter.model.AbstractUrun;
 import com.envanter.model.Envanter;
-import com.envanter.model.Urun;
-import com.envanter.service.DepoYoneticisi;
 import com.envanter.model.NormalUrun;
-import java.awt.Dimension;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import com.envanter.service.DepoYoneticisi;
+
 
 
 public class AnaPencere extends JFrame {
+private static final long serialVersionUID = 1L;
 
-    // ✅ المتغيرات لازم تكون داخل الكلاس
+	// ✅ المتغيرات لازم تكون داخل الكلاس
     private Envanter envanter;
     private DepoYoneticisi depoYoneticisi;
 
@@ -51,14 +48,14 @@ public class AnaPencere extends JFrame {
 
         add(butonPanel, BorderLayout.CENTER);
 
-        // ربط زر الأزرار
+        // ربط زر الاضافة
         urunEkleBtn.addActionListener(e -> urunEkle());
     	listeleBtn.addActionListener(e -> urunleriListele());
     	urunSilBtn.addActionListener(e -> urunSil());
 
 
     }
-    	
+    
     private int id = 1;
     
     private void urunEkle() {
@@ -84,12 +81,20 @@ public class AnaPencere extends JFrame {
                 String ad = adField.getText();
                 double fiyat = Double.parseDouble(fiyatField.getText());
                 int adet = Integer.parseInt(adetMiktariField.getText());
+                AbstractUrun mevcutUrun = depoYoneticisi.urunBulAdGore(ad);
 
-                AbstractUrun urun = new NormalUrun(id++, ad, fiyat);
-                urun.setAdetMiktari(adet);
-                depoYoneticisi.urunEkle(urun);
+                if (mevcutUrun != null) {
+                    // المنتج موجود → زِد الكمية
+                    depoYoneticisi.AdetGuncelle(mevcutUrun, adet);
+                    JOptionPane.showMessageDialog(this, "Mevcut ürünün Adet güncellendi.");
+                } else {
+                    // منتج جديد → ID جديد تلقائي
+                    AbstractUrun yeniUrun = new NormalUrun(id++, ad, fiyat);
+                    yeniUrun.AdetArtir(adet);
+                    depoYoneticisi.urunEkle(yeniUrun);
+                    JOptionPane.showMessageDialog(this, "Yeni ürün eklendi.");
+                }
 
-                JOptionPane.showMessageDialog(this, "Ürün eklendi");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Hatalı giriş!", "Hata", JOptionPane.ERROR_MESSAGE);
             }
@@ -113,7 +118,10 @@ public class AnaPencere extends JFrame {
 
         for (var urun : urunler) {
             sb.append(urun.urunBilgisi()).append("\n");
-            sb.append("-------------------\n");
+            if (urun.dusukAdetMi()) {
+            sb.append("⚠⚠⚠  Düşük Adet uyarısı! ⚠⚠⚠   ⚠⚠⚠  Düşük Adet uyarısı! ⚠⚠⚠\n");
+            }
+            sb.append("-----------------------------------------------------\n");
         }
 
         JTextArea textArea = new JTextArea(sb.toString());
