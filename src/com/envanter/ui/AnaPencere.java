@@ -8,6 +8,7 @@ import com.envanter.model.Envanter;
 import com.envanter.model.NormalUrun;
 import com.envanter.service.DepoYoneticisi;
 import java.time.LocalDate;
+import com.envanter.model.Tedarikci;
 
 
 public class AnaPencere extends JFrame {
@@ -16,6 +17,7 @@ private static final long serialVersionUID = 1L;
 	// ✅ المتغيرات لازم تكون داخل الكلاس
     private Envanter envanter;
     private DepoYoneticisi depoYoneticisi;
+    private int tedarikciId = 1;
 
     public AnaPencere() {
         // إنشاء المنطق (Model + Service)
@@ -59,14 +61,16 @@ private static final long serialVersionUID = 1L;
 
     }
     
-    private int id = 1;
+    private int id = 0;
     
     private void urunEkle() {
         JTextField adField = new JTextField();
         JTextField fiyatField = new JTextField();
         JTextField adetMiktariField = new JTextField();
         JTextField sktField = new JTextField(); // yyyy-MM-dd
+        JTextField tedarikciField = new JTextField(); // جديد
 
+        
         JCheckBox bozulabilirCheck = new JCheckBox("Bozulabilir Ürün");
         // بالبداية يكون معطّل
         sktField.setEnabled(false);
@@ -74,7 +78,7 @@ private static final long serialVersionUID = 1L;
         //ربط زر التلف مع حقل التاريخ
         bozulabilirCheck.addActionListener(e -> {
             boolean seciliMi = bozulabilirCheck.isSelected();
-            sktField.setEnabled(seciliMi);
+            sktField.setEnabled(bozulabilirCheck.isSelected());
 
             if (!seciliMi) {
                 sktField.setText("");
@@ -86,8 +90,9 @@ private static final long serialVersionUID = 1L;
                 "Ürün Adı:", adField,
                 "Fiyat:", fiyatField,
                 "Adet:", adetMiktariField,
-                bozulabilirCheck,
-                "Son Kullanma Tarihi (yyyy-MM-dd):", sktField
+                "Son Kullanma Tarihi (yyyy-MM-dd):",  bozulabilirCheck, sktField,
+                "Tedarikçi Adı:", tedarikciField //  جديد
+
             };
 
         int sonuc = JOptionPane.showConfirmDialog(
@@ -102,14 +107,18 @@ private static final long serialVersionUID = 1L;
                 String ad = adField.getText();
                 double fiyat = Double.parseDouble(fiyatField.getText());
                 int adet = Integer.parseInt(adetMiktariField.getText());
+                String tedarikciAdi = tedarikciField.getText().trim(); // جديد
+
                 AbstractUrun mevcutUrun = depoYoneticisi.urunBulAdGore(ad);
 
                 if (mevcutUrun != null) {
-                    // المنتج موجود → زِد الكمية
+                    // المنتج موجود 
+                	//زِد الكمية
                     depoYoneticisi.AdetGuncelle(mevcutUrun, adet);
                     JOptionPane.showMessageDialog(this, "Mevcut ürünün Adet güncellendi.");
                     return;
                 }
+                
 
                 AbstractUrun yeniUrun;
                 // استخدام تاريخ الصلاحية وقت يتفعل الزر  
@@ -118,6 +127,8 @@ private static final long serialVersionUID = 1L;
                     yeniUrun = new BozulabilirUrun(++id, ad, fiyat, skt);
                 } else {
                     yeniUrun = new NormalUrun(++id, ad, fiyat);
+                    yeniUrun.setTedarikci(tedarikciAdi);
+
                 }
 
                 yeniUrun.AdetArtir(adet);
@@ -151,7 +162,7 @@ private static final long serialVersionUID = 1L;
             if (urun.dusukAdetMi()) {
             sb.append("⚠⚠⚠  Düşük Adet uyarısı! ⚠⚠⚠   ⚠⚠⚠  Düşük Adet uyarısı! ⚠⚠⚠\n");
             }
-            sb.append("-----------------------------------------------------\n");
+            sb.append("-------------------------------------------------------------------------------------------\n");
         }
 
         JTextArea textArea = new JTextArea(sb.toString());

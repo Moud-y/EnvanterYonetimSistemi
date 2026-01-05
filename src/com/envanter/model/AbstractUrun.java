@@ -1,11 +1,13 @@
 package com.envanter.model;
+import com.envanter.model.Tedarikci;
 
 public abstract class AbstractUrun {
 
-	protected  int id = 1;
+	protected  int id = 0;
     protected String ad;
     protected double fiyat;
     protected int adetMiktari;
+    protected String  tedarikci;
 
     public AbstractUrun(int id, String ad, double fiyat) {
         this.id = id;   // ID تلقائي
@@ -35,6 +37,12 @@ public abstract class AbstractUrun {
     }
     public int getadetMiktari() {
         return adetMiktari;
+    }
+    public String getTedarikci() {
+        return tedarikci;
+    }
+    public void setTedarikci(String tedarikci) {
+        this.tedarikci = tedarikci;
     }
     public void setAd(String ad) {
         this.ad = ad;

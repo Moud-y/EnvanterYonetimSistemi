@@ -21,7 +21,11 @@ public class BozulabilirUrun extends AbstractUrun {
         this.SonKullanmaTarihi = skt;
     }
      public String urunBilgisi() {
-         return "ID: " + id + " | Ürün: " + ad + " | Fiyat: " + fiyat +
-                " | Stok: " + adetMiktari + " | SKT: " + SonKullanmaTarihi;
+         return "ID: " + id +
+        		"  |   Ürün: " + ad +
+        		"      Fiyat: " + fiyat +
+                "      Adet: " + adetMiktari +
+                "      SKT: " + SonKullanmaTarihi +
+         		"      Tedarikçi: " + (getTedarikci() != null ? getTedarikci() : "-");
      }
 }

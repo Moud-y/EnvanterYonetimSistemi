@@ -10,6 +10,7 @@ public class NormalUrun extends AbstractUrun {
         return "ID: " + id +
                "        Ürün: " + ad +
                "        Fiyat: " + fiyat +
-               "        Adet: " + adetMiktari;
+               "        Adet: " + adetMiktari +
+        	   "        Tedarikçi: " + (getTedarikci() != null ? getTedarikci() : "-");
     }
 }
