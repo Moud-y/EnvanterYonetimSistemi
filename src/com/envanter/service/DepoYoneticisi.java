@@ -24,9 +24,8 @@ public class DepoYoneticisi {
     public List<AbstractUrun > tumUrunleriGetir() {
         return envanter.getUrunler();
     }
-    // الزر لاحقاً سيطلب ID
-    // اما بصير UI يلف على القائمة
-    // هذا منطق → service
+    
+    //بحث عن طريق الاي دي
     public AbstractUrun urunBulIdIle(int id) {
         for (AbstractUrun urun : envanter.getUrunler()) {
             if (urun.getId() == id) {
@@ -40,7 +39,7 @@ public class DepoYoneticisi {
         return urun.dusukAdetMi();
     }
     
-
+    //بحث عن طريق الاسم
     public AbstractUrun urunBulAdGore(String ad) {
         for (AbstractUrun urun : envanter.getUrunler()) {
             if (urun.getAd().equalsIgnoreCase(ad)) {

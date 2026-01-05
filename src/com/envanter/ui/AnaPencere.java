@@ -36,15 +36,17 @@ private static final long serialVersionUID = 1L;
         add(baslik, BorderLayout.NORTH);
 
         // الأزرار
-        JPanel butonPanel = new JPanel(new GridLayout(3, 1, 10, 10));
+        JPanel butonPanel = new JPanel(new GridLayout(4, 1, 10, 10));
 
         JButton urunEkleBtn = new JButton("Ürün Ekle");
         JButton urunSilBtn = new JButton("Ürün Sil");
         JButton listeleBtn = new JButton("Ürünleri Listele");
+        JButton araBtn = new JButton("Ürün Ara");
 
         butonPanel.add(urunEkleBtn);
         butonPanel.add(urunSilBtn);
         butonPanel.add(listeleBtn);
+        butonPanel.add(araBtn);
 
         add(butonPanel, BorderLayout.CENTER);
 
@@ -52,7 +54,7 @@ private static final long serialVersionUID = 1L;
         urunEkleBtn.addActionListener(e -> urunEkle());
     	listeleBtn.addActionListener(e -> urunleriListele());
     	urunSilBtn.addActionListener(e -> urunSil());
-
+    	araBtn.addActionListener(e -> urunAra());
 
     }
     
@@ -172,6 +174,47 @@ private static final long serialVersionUID = 1L;
             );
         }
     }
+    //زر البحث
+    private void urunAra() {
+        String input = JOptionPane.showInputDialog(
+            this,
+            "Ürün adı veya ID giriniz:",
+            "Ürün Ara",
+            JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (input == null || input.trim().isEmpty()) return;
+
+        AbstractUrun urun = null;
+
+        try {
+            // إذا المستخدم دخل رقم → نبحث بالـ ID
+            int id = Integer.parseInt(input);
+            urun = depoYoneticisi.urunBulIdIle(id);
+        } catch (NumberFormatException e) {
+            // غير رقم → نبحث بالاسم
+            urun = depoYoneticisi.urunBulAdGore(input);
+        }
+
+        if (urun == null) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Ürün bulunamadı!",
+                "Bilgi",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+            return;
+        }
+
+        JOptionPane.showMessageDialog(
+            this,
+            urun.urunBilgisi(),
+            "Ürün Bilgisi",
+            JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
+
 
 
     public static void main(String[] args) {
