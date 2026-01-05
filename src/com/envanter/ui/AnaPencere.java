@@ -3,10 +3,11 @@ import javax.swing.*;
 import java.awt.*;
 
 import com.envanter.model.AbstractUrun;
+import com.envanter.model.BozulabilirUrun;
 import com.envanter.model.Envanter;
 import com.envanter.model.NormalUrun;
 import com.envanter.service.DepoYoneticisi;
-
+import java.time.LocalDate;
 
 
 public class AnaPencere extends JFrame {
@@ -64,12 +65,30 @@ private static final long serialVersionUID = 1L;
         JTextField adField = new JTextField();
         JTextField fiyatField = new JTextField();
         JTextField adetMiktariField = new JTextField();
+        JTextField sktField = new JTextField(); // yyyy-MM-dd
+
+        JCheckBox bozulabilirCheck = new JCheckBox("Bozulabilir Ürün");
+        // بالبداية يكون معطّل
+        sktField.setEnabled(false);
+        
+        //ربط زر التلف مع حقل التاريخ
+        bozulabilirCheck.addActionListener(e -> {
+            boolean seciliMi = bozulabilirCheck.isSelected();
+            sktField.setEnabled(seciliMi);
+
+            if (!seciliMi) {
+                sktField.setText("");
+            }
+        });
+
 
         Object[] mesaj = {
                 "Ürün Adı:", adField,
                 "Fiyat:", fiyatField,
-                "adet:", adetMiktariField,
-        };
+                "Adet:", adetMiktariField,
+                bozulabilirCheck,
+                "Son Kullanma Tarihi (yyyy-MM-dd):", sktField
+            };
 
         int sonuc = JOptionPane.showConfirmDialog(
                 this,
@@ -89,13 +108,22 @@ private static final long serialVersionUID = 1L;
                     // المنتج موجود → زِد الكمية
                     depoYoneticisi.AdetGuncelle(mevcutUrun, adet);
                     JOptionPane.showMessageDialog(this, "Mevcut ürünün Adet güncellendi.");
-                } else {
-                    // منتج جديد → ID جديد تلقائي
-                    AbstractUrun yeniUrun = new NormalUrun(id++, ad, fiyat);
-                    yeniUrun.AdetArtir(adet);
-                    depoYoneticisi.urunEkle(yeniUrun);
-                    JOptionPane.showMessageDialog(this, "Yeni ürün eklendi.");
+                    return;
                 }
+
+                AbstractUrun yeniUrun;
+                // استخدام تاريخ الصلاحية وقت يتفعل الزر  
+                if (bozulabilirCheck.isSelected()) {
+                    LocalDate skt = LocalDate.parse(sktField.getText());
+                    yeniUrun = new BozulabilirUrun(++id, ad, fiyat, skt);
+                } else {
+                    yeniUrun = new NormalUrun(++id, ad, fiyat);
+                }
+
+                yeniUrun.AdetArtir(adet);
+                depoYoneticisi.urunEkle(yeniUrun);
+
+                JOptionPane.showMessageDialog(this, "Yeni ürün eklendi.");
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Hatalı giriş!", "Hata", JOptionPane.ERROR_MESSAGE);
