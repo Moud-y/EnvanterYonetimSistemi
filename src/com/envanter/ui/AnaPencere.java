@@ -115,7 +115,12 @@ private static final long serialVersionUID = 1L;
                     // المنتج موجود 
                 	//زِد الكمية
                     depoYoneticisi.AdetGuncelle(mevcutUrun, adet);
-                    JOptionPane.showMessageDialog(this, "Mevcut ürünün Adet güncellendi.");
+                    mevcutUrun.setFiyat(fiyat);
+
+                    JOptionPane.showMessageDialog(
+                        this,
+                        "Mevcut ürünün adet ve fiyat bilgisi güncellendi."
+                    );
                     return;
                 }
                 
